@@ -2,12 +2,12 @@
 #
 # FastAPI app ready to deploy on Render (or run locally).
 # Requirements:
-#   fastapi
-#   uvicorn
-#   python-multipart
+#    fastapi
+#    uvicorn
+#    python-multipart
 #
 # Recommended Render start command:
-#   gunicorn -w 4 -k uvicorn.workers.UvicornWorker index:app
+#    gunicorn -w 4 -k uvicorn.workers.UvicornWorker index:app
 #
 # This app:
 # - accepts a .txt upload or pasted text
@@ -37,16 +37,17 @@ logger = logging.getLogger("pokemon-parser")
 app = FastAPI(title="Pokémon Parser (Render)")
 
 # --- HTML UI ---
+# FIXED: CSS curly braces {} are escaped by doubling them to {{}} so Python's .format() ignores them.
 HTML_UI = """<!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Pokémon Parser</title>
 <style>
-  body{font-family:Inter,Arial,sans-serif;margin:22px;background:#f6f7fb;color:#111}
-  .card{background:#fff;padding:14px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.06);max-width:900px}
-  pre{white-space:pre-wrap;font-family:monospace;background:#f8f9fb;padding:10px;border-radius:6px}
-  textarea{width:100%;height:160px;font-family:monospace;padding:8px;border-radius:6px}
-  .row{display:flex;gap:8px;align-items:center}
-  .hint{color:#666;font-size:13px;margin-top:8px}
+  body{{font-family:Inter,Arial,sans-serif;margin:22px;background:#f6f7fb;color:#111}}
+  .card{{background:#fff;padding:14px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.06);max-width:900px}}
+  pre{{white-space:pre-wrap;font-family:monospace;background:#f8f9fb;padding:10px;border-radius:6px}}
+  textarea{{width:100%;height:160px;font-family:monospace;padding:8px;border-radius:6px}}
+  .row{{display:flex;gap:8px;align-items:center}}
+  .hint{{color:#666;font-size:13px;margin-top:8px}}
 </style>
 </head>
 <body>
@@ -141,9 +142,9 @@ def extract_names_in_order(text: str) -> List[str]:
     """
     Extract names in the order they appear in the text.
     Strategy:
-     - Use SPARKLE_RE and GENDER_TAG_RE finditer over the whole text to preserve order.
-     - As fallback, use LINE_START_NAME_RE to get additional names.
-     - Return a list of cleaned name tokens (may contain duplicates).
+      - Use SPARKLE_RE and GENDER_TAG_RE finditer over the whole text to preserve order.
+      - As fallback, use LINE_START_NAME_RE to get additional names.
+      - Return a list of cleaned name tokens (may contain duplicates).
     """
     if not text:
         return []
